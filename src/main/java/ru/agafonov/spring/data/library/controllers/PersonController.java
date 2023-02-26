@@ -21,43 +21,55 @@ public class PersonController {
         this.personService = personService;
     }
 
+    //
     @GetMapping()
     public String index(Model model){
         model.addAttribute("people", personService.findAll());
 
         return "person/index";
     }
-
+    //
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person){
 
         return "person/new";
     }
+    //
+    @PostMapping("/new")
+    public String create(@ModelAttribute("person") @Valid Person person){
+        personService.save(person);
 
-    @PostMapping()
-    public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult){
-        return "person/new";
+        return "redirect:/person";
     }
 
+    //
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
-        return "person/new";
+
+        model.addAttribute("person", personService.findOne(id));
+        return "person/edit";
     }
 
+    //
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id){
-        return "person/new";
-    }
+        model.addAttribute("person", personService.findOne(id));
 
+        return "person/show";
+    }
+    //
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Person person,BindingResult bindingResult,
+    public String update(@ModelAttribute("person") @Valid Person person,
                          @PathVariable("id") int id){
 
-        return "person/new";
+        personService.update(id, person);
+        return "redirect:/person";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
-        return "person/new";
+        personService.delete(id);
+
+        return "redirect:/person";
     }
 }
