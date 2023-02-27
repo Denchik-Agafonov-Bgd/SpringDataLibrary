@@ -3,11 +3,8 @@ package ru.agafonov.spring.data.library.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +39,13 @@ public class Person {
         this.dateOfBirth = date_of_birth;
     }
 
+    public Person(int id, String name, Date dateOfBirth, List<Book> books) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.books = books;
+    }
+
     public int getId() {
         return id;
     }
@@ -65,6 +69,27 @@ public class Person {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public Person addBooks(List<Book> books) {
+        setBooks(books);
+        return this;
+    }
+
+    /*public void addBooks(Book book){
+        if(this.books == null)
+            this.books = new ArrayList<>();
+
+        this.books.add(book);
+        book.setOwner(this);
+    }*/
 
     @Override
     public String toString() {

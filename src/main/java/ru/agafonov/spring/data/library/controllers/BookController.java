@@ -16,41 +16,62 @@ public class BookController {
     private final BookService bookService;
 
     public BookController(BookService bookService) {
+
         this.bookService = bookService;
     }
+    //
+    @GetMapping()
+    public String index(Model model){
+        model.addAttribute("books", bookService.findAll());
 
+        return "book/index";
+    }
+    //
     @GetMapping("/new")
-    public String newPerson(@ModelAttribute("books") Book book){
-        return "person/index";
+    public String newPerson(@ModelAttribute("book") Book book){
+        return "book/new";
+    }
+    //
+    @PostMapping("/new")
+    public String create(@ModelAttribute("book") @Valid Book book){
+        bookService.save(book);
+
+        return "redirect:/book";
     }
 
-    @PostMapping()
-    public String create(@ModelAttribute("books") @Valid Book book, BindingResult bindingResult){
-        return "person/index";
+    //
+    @GetMapping("/{id}")
+    public String show(Model model, @PathVariable("id") int id){
+        model.addAttribute("book", bookService.findById(id));
+
+        return "book/show";
+    }
+
+    //
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("book") @Valid Book book, @PathVariable("id") int id){
+        bookService.update(book, id);
+
+        return "redirect:/book";
+    }
+
+    //
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id){
+        bookService.delete(id);
+
+        return "redirect:/book";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
-        return "person/index";
-    }
+        model.addAttribute("book", bookService.findById(id));
 
-    @GetMapping("/{id}")
-    public String show(Model model, @ModelAttribute("person") Person person, @PathVariable("id") int id){
-        return "person/index";
-    }
-
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("books") @Valid Book book, BindingResult bindingResult, @PathVariable("id") int id){
-        return "person/index";
+        return "book/edit";
     }
 
     @PatchMapping("/{id}/release")
     public String update(@PathVariable("id") int id){
-        return "person/index";
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
         return "person/index";
     }
 

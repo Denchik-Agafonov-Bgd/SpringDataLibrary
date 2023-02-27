@@ -7,17 +7,17 @@
 <body>
 <p th:text="${person.getName()+', '+person.getDateOfBirth()}">VALUE</p>
 
-<!--<div th:if="${personBooks.isEmpty()}">
+<div th:if="${person.getBooks.isEmpty()}">
     <p>Человек пока не взял ни одной книги</p>
     <hr/>
 </div>
 
-<div th:if="${!personBooks.isEmpty()}">
+<div th:if="${!person.getBooks.isEmpty()}">
     <p>Книги:</p>
-    <div th:each="personBook : ${personBooks}">
+    <div th:each="personBook : ${person.getBooks}">
         <p th:text="${personBook.getName()+', '+personBook.getAuthor()+', '+personBook.getYear()}">VALUE</p>
     </div>
-</div>-->
+</div>
 
 
 <form th:method="GET" th:action="@{/person/{id}/edit(id=${person.getId()})}">

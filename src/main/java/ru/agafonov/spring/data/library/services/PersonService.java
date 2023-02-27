@@ -26,11 +26,11 @@ public class PersonService {
     }
 
     @Transactional
-    public void save(Person person){
-        personRepository.save(person);
+    public void save(Person personToSave){
+        personRepository.save(personToSave);
     }
 
-    public Person findOne(int id) {
+    public Person findById(int id) {
         Optional<Person> foundPerson = personRepository.findById(id);
 
         return foundPerson.orElse(null);
