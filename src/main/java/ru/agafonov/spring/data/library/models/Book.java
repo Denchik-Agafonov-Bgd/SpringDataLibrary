@@ -24,7 +24,6 @@ public class Book {
     @Column(name="author")
     private String author;
 
-    @NotEmpty(message = "Поле не должно быть пустым")
     @Column(name = "year")
     private int year;
 

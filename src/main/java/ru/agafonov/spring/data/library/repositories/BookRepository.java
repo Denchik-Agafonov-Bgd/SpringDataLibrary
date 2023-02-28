@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> findByOwner_Id(int IdOwner);
+
+
 }

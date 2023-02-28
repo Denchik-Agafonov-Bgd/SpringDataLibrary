@@ -35,7 +35,7 @@ public class PersonController {
     }
     //
     @PostMapping("/new")
-    public String create(@ModelAttribute("person") @Valid Person person){
+    public String create(@ModelAttribute("person")  Person person){
         personService.save(person);
 
         return "redirect:/person";
@@ -44,18 +44,13 @@ public class PersonController {
     //
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id){
-        /*Person person = new Person();
-        person = personService.findById(id);
-        person.setBooks(bookService.findByOwner_Id(id));*/
-
         model.addAttribute("person", personService.findById(id).addBooks(bookService.findByOwner_Id(id)));
-        model.addAttribute("books", bookService.findByOwner_Id(id));
 
         return "person/show";
     }
     //
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Person person,
+    public String update(@ModelAttribute("person") Person person,
                          @PathVariable("id") int id){
 
         personService.update(id, person);

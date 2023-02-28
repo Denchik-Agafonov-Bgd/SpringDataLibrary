@@ -7,20 +7,20 @@
 <body>
 <p th:text="${book.getName()+', '+book.getAuthor()+', '+book.getYear()}">VALUE</p>
 
-<!--<div th:if="${book.getPerson_id()==null}">
+<div th:if="${book.getOwner()==null}">
     <p>Эта книга свободна. Кому ее выдать?</p>
 
-    &lt;!&ndash;<div th:each="person : ${people}">
+    <!--<div th:each="person : ${people}">
         <a  th:href="@{/person/{id}(id=${person.getId()})}"
             th:text="${person.getFio()+', '+person.getBirthday()}">user</a>
-    </div>&ndash;&gt;
+    </div>-->
 
-    <form th:method="Patch" th:action="@{/book/{id}/assign(id=${books.getId()})}">
+    <form th:method="PATCH" th:action="@{/book/{id}/assign(id=${book.getId()})}">
         <label for="person">Выберите человека</label>
         <select th:object="${person}" th:field="*{id}" id="person">
             <option th:each="person : ${people}"
                     th:value="${person.getId()}"
-                    th:text="${person.getFio()}">
+                    th:text="${person.getName()}">
             </option>
         </select>
         <input type="submit" value="Назначить книгу">
@@ -29,20 +29,20 @@
     <hr/>
 </div>
 
-<div th:if="${books.getPerson_id()!=null}">
-    <p th:text="${'Эта книга сейчас у ' + booksAndPerson.getFio()}">VALUE</p>
+<div th:if="${book.getOwner()!=null}">
+    <p th:text="${'Эта книга сейчас у ' + book.getOwner().getName()}">VALUE</p>
 
-    <form th:method="Patch" th:action="@{/book/{id}/release(id=${books.getId()})}">
+    <form th:method="PATCH" th:action="@{/book/{id}/deleteOwnerToBook(id=${book.getId()})}" >
         <input type="submit" value="Освободить книгу">
     </form>
     <hr/>
-</div>-->
+</div>
 
-<form th:method="GET" th:action="@{/book/{id}/edit(id=${books.getId()})}">
+<form th:method="GET" th:action="@{/book/{id}/edit(id=${book.getId()})}">
     <input type="submit" value="Редактировать">
 </form>
 
-<form th:method="DELETE" th:action="@{/book/{id}(id=${books.getId()})}">
+<form th:method="DELETE" th:action="@{/book/{id}(id=${book.getId()})}">
     <input type="submit" value="Удалить">
 </form>
 
